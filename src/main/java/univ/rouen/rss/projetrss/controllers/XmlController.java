@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.web.bind.annotation.*;
-import univ.rouen.rss.projetrss.models.Feed;
-import univ.rouen.rss.projetrss.models.Item;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
