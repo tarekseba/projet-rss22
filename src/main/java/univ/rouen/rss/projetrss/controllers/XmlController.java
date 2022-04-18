@@ -2,9 +2,7 @@ package univ.rouen.rss.projetrss.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.xmldb.api.base.XMLDBException;
 import univ.rouen.rss.projetrss.services.RPCService;
-import java.lang.reflect.InvocationTargetException;
 
 @RestController
 public class XmlController {
@@ -43,6 +41,13 @@ public class XmlController {
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
                 +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
                 +"return update delete $x";
+        return service.get(xQuery);
+    }
+
+    @PostMapping(value = "/rss22/insert",consumes = "application/xml")
+    public String addFlux(@RequestBody String flux) throws Exception {
+        String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\";\n"
+                +"update insert "+flux+" into  collection('/db/rss22')/rss:feed";
         return service.get(xQuery);
     }
 }
