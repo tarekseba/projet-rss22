@@ -1,4 +1,4 @@
-package models;
+package univ.rouen.rss.projetrss.models;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

@@ -1,14 +1,23 @@
 package univ.rouen.rss.projetrss.controllers;
 
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import univ.rouen.rss.projetrss.services.RPCService;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class XmlController {
     @Autowired
     private RPCService service;
     protected static String resourceName = "tp.xml";
+
+    private static File file=new File("src/main/resources/xsd/item.xsd");
 
     @RequestMapping(value = "/rss22/resume/xml",method = RequestMethod.GET,produces = "application/xml")
     public String getFlux() throws Exception {
@@ -30,24 +39,39 @@ public class XmlController {
 
     @GetMapping(value = "/rss22/resume/xml/{guid}",produces = "application/xml")
     public  String getFluxByGuid(@PathVariable("guid") String guid) throws Exception {
+
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
                 +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
                 +"return $x";
+
         return service.get(xQuery);
     }
 
     @DeleteMapping(value = "/rss22/delete/{guid}",produces = "application/xml")
     public String deleteFluxByGuid(@PathVariable("guid") String guid) throws Exception {
+
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
                 +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
                 +"return update delete $x";
+
         return service.get(xQuery);
     }
 
-    @PostMapping(value = "/rss22/insert",consumes = "application/xml")
-    public String addFlux(@RequestBody String flux) throws Exception {
+    @PostMapping(value = "/rss22/insert")
+    public ResponseEntity addFlux(@RequestBody String flux) throws Exception {
+
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\";\n"
                 +"update insert "+flux+" into  collection('/db/rss22')/rss:feed";
-        return service.get(xQuery);
+
+        String validXml=flux.replaceAll("rss:","");
+
+        if(service.valid(file,validXml)){
+            service.get(xQuery);
+            return new ResponseEntity("status:succes", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("status:error",HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        }
     }
+
 }
