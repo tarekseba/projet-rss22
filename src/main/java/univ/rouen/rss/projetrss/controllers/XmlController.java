@@ -1,174 +1,48 @@
 package univ.rouen.rss.projetrss.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.xmldb.api.base.XMLDBException;
+import univ.rouen.rss.projetrss.services.RPCService;
+import java.lang.reflect.InvocationTargetException;
 
 @RestController
 public class XmlController {
+    @Autowired
+    private RPCService service;
+    protected static String resourceName = "tp.xml";
 
     @RequestMapping(value = "/rss22/resume/xml",method = RequestMethod.GET,produces = "application/xml")
-    public String getFlux(){
-        StringBuffer buffer=new StringBuffer();
-        try {
-            URL url = new URL("http://10.130.163.32:8080/exist/rest/db/rss22");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept", "application/xml");
-            connection.setRequestProperty("Content-Type", "application/xml");
-
-            String request="<query xmlns=\"http://exist.sourceforge.net/NS/exist\"\n" +
-                    "xmlns:rss=\"http://univrouen.fr/rss22\"" +
-                    ">\n" +
-                    "  <text>\n" +
-                    "    for $x in //rss:feed/rss:item\n" +
-                    "    return ($x/rss:guid)\n" +
-                    "  </text>\n" +
-                    "</query>";
-
-            OutputStream os = connection.getOutputStream();
-            os.write(request.getBytes());
-            os.flush();
-
-            if (connection.getResponseCode() > 299) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + connection.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (connection.getInputStream())));
-
-            String response;
-            while ((response = br.readLine()) != null) {
-                buffer.append(response);
-            }
-
-            connection.disconnect();
-
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return buffer.toString();
+    public String getFlux() throws Exception {
+        String xQuery = "declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
+                +"<items>{for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item\n"
+                +"return\n"
+                +"<item>\n"
+                +"{\n" +
+                "if($x/rss:published/text())\n" +
+                "then\n" +
+                "<date>{format-date(xs:dateTime($x/rss:published/text()), \"[M01]/[D01]/[Y0001]\")}</date> \n" +
+                "else\n" +
+                "<date>{format-date(xs:dateTime($x/rss:updated/text()), \"[M01]/[D01]/[Y0001]\")}</date>\n" +
+                "}\n"
+                +"<title>{$x/rss:title/text()}</title><guid>{$x/rss:guid/text()}</guid></item>}\n"+
+                "</items>";
+        return service.get(xQuery);
     }
 
     @GetMapping(value = "/rss22/resume/xml/{guid}",produces = "application/xml")
-    public  String getFluxByGuid(@PathVariable("guid") String guid){
-
-        StringBuffer buffer=new StringBuffer();
-
-        try {
-            URL url = new URL("http://10.130.163.32:8080/exist/rest/db/rss22");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept", "application/xml");
-            connection.setRequestProperty("Content-Type", "application/xml");
-
-            System.out.println(guid);
-
-            String request="<query xmlns=\"http://exist.sourceforge.net/NS/exist\"\n" +
-                    "xmlns:rss=\"http://univrouen.fr/rss22\"" +
-                    ">\n" +
-                    "  <text>\n" +
-                    "    for $x in //rss:feed/rss:item where $x//rss:guid/text()='"+guid+"' \n" +
-                    "    return ($x)\n" +
-                    "  </text>\n" +
-                    "</query>";
-
-            OutputStream os = connection.getOutputStream();
-            os.write(request.getBytes());
-            os.flush();
-
-            if (connection.getResponseCode() > 299) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + connection.getResponseCode());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (connection.getInputStream())));
-
-            String response;
-            while ((response = br.readLine()) != null) {
-                buffer.append(response);
-            }
-
-            connection.disconnect();
-
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return buffer.toString();
-
+    public  String getFluxByGuid(@PathVariable("guid") String guid) throws Exception {
+        String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
+                +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
+                +"return $x";
+        return service.get(xQuery);
     }
 
-    @PostMapping("/rss22/insert")
-    public String postFlux(){
-        return "Flux ajouté avec succés";
-    }
     @DeleteMapping(value = "/rss22/delete/{guid}",produces = "application/xml")
-    public String deleteFluxByGuid(@PathVariable("guid") String guid){
-        System.out.println("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-        StringBuffer buffer=new StringBuffer();
-
-        try {
-            URL url = new URL("http://10.130.163.32:8080/exist/rest/db/rss22");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setRequestMethod("DELETE");
-            connection.connect();
-
-            String request="<query xmlns=\"http://exist.sourceforge.net/NS/exist\"\n" +
-                    "xmlns:rss=\"http://univrouen.fr/rss22\"" +
-                    ">\n" +
-                    "  <text>\n" +
-                    "    for $x in //rss:feed/rss:item where $x//rss:guid/text()='"+guid+"' \n"+
-                    "    return update delete $x\n" +
-                    "  </text>\n" +
-                    "</query>";
-
-            OutputStream os = connection.getOutputStream();
-            os.write(request.getBytes());
-            os.flush();
-
-            if (connection.getResponseCode() > 299) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + connection.getResponseMessage());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (connection.getInputStream())));
-
-            String response;
-            while ((response = br.readLine()) != null) {
-                buffer.append(response);
-            }
-
-            connection.disconnect();
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return buffer.toString();
+    public String deleteFluxByGuid(@PathVariable("guid") String guid) throws Exception {
+        String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
+                +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
+                +"return update delete $x";
+        return service.get(xQuery);
     }
 }
