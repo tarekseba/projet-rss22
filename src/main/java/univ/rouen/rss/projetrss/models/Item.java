@@ -2,7 +2,9 @@ package univ.rouen.rss.projetrss.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.PROPERTY)
+@Getter
 public class Item implements Serializable {
     @XmlElement(name = "guid")
     private String guid;
@@ -29,7 +32,6 @@ public class Item implements Serializable {
     private String content;
     @XmlElement(name = "author")
     private Author author;
-
 
     @Override
     public String toString() {

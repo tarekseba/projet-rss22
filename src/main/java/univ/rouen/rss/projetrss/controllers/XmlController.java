@@ -4,10 +4,17 @@ import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import univ.rouen.rss.projetrss.services.RPCService;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +27,7 @@ public class XmlController {
     private static File file=new File("src/main/resources/xsd/item.xsd");
 
     @RequestMapping(value = "/rss22/resume/xml",method = RequestMethod.GET,produces = "application/xml")
-    public String getFlux() throws Exception {
+    public String getFluxXML() throws Exception {
         String xQuery = "declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
                 +"<items>{for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item\n"
                 +"return\n"
@@ -37,8 +44,42 @@ public class XmlController {
         return service.get(xQuery);
     }
 
+    @RequestMapping(value = "/rss22/resume/html",method = RequestMethod.GET,produces = "text/html")
+    public String getFluxHtml() throws Exception{
+
+        String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
+                +"for $x in collection('/db/rss22/')//rss:feed\n"
+                +"return $x";
+
+        String xml= service.get(xQuery);
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer=transformerFactory.newTransformer(new StreamSource("src/main/resources/templates/item.xslt"));
+        StringWriter writer=new StringWriter();
+        transformer.transform(new StreamSource(new StringReader(xml.replaceAll("rss:",""))),new StreamResult(writer));
+
+        return writer.toString();
+    }
+
+    @GetMapping(value = "/rss22/resume/html/{guid}")
+    public  String getFluxByGuidHTML(@PathVariable("guid") String guid, Model model) throws Exception {
+
+        String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
+                +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
+                +"return $x";
+
+        String xml= service.get(xQuery);
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer=transformerFactory.newTransformer(new StreamSource("src/main/resources/templates/itembyguid.xslt"));
+        StringWriter writer=new StringWriter();
+        transformer.transform(new StreamSource(new StringReader(xml.replaceAll("rss:",""))),new StreamResult(writer));
+
+        return writer.toString();
+    }
+
     @GetMapping(value = "/rss22/resume/xml/{guid}",produces = "application/xml")
-    public  String getFluxByGuid(@PathVariable("guid") String guid) throws Exception {
+    public  String getFluxByGuidXML(@PathVariable("guid") String guid) throws Exception {
 
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
                 +"for $x in doc(\"" + resourceName + "\")//rss:feed/rss:item where $x/rss:guid/text()='"+guid+"'\n"
