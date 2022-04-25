@@ -31,7 +31,7 @@
                 <div>
                     <table>
                         <thead>
-                            <th>name</th>
+                            <th>guid</th>
                             <th>title</th>
                             <th>category</th>
                             <th>date</th>

@@ -105,9 +105,11 @@ public class XmlController {
                 +"update insert "+flux+" into  collection('/db/rss22')/rss:feed";
 
         String validXml=flux.replaceAll("rss:","");
+        System.out.println(flux);
 
         if(service.valid(file,validXml)){
             service.get(xQuery);
+            System.out.println("HAHAHAHAHAHA");
             return new ResponseEntity("status:succes", HttpStatus.OK);
         }
         else {

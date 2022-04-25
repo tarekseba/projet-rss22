@@ -31,6 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 public class RPCService {
     protected static String DRIVER = "org.exist.xmldb.DatabaseImpl";
     protected static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
+    //protected static String URI = "xmldb:exist://exist-tarek-xml.cleverapps.io/exist/xmlrpc";
     protected static String collectionPath = "/db/rss22";
 
     public String get(String xQuery) throws Exception {
@@ -46,7 +47,7 @@ public class RPCService {
         XQueryService service=(XQueryService)col.getService("XQueryService","1.0");
         service.clearNamespaces();
         service.setProperty("indent","yes");
-
+        //service.setNamespace("","rss");
         //Execute query print result
         ResourceSet result=service.query(xQuery);
         ResourceIterator i=result.getIterator();
@@ -67,7 +68,7 @@ public class RPCService {
             Schema schema=schemaFactory.newSchema(file);
             Validator validator=schema.newValidator();
             validator.validate(xml);
-            System.out.println(xmlString+" IS VALID");
+            System.out.println("IS VALID");
         } catch (IOException|SAXException e) {
             System.out.println(e.getMessage());
             return false;
