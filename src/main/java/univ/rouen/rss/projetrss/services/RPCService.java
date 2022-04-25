@@ -47,7 +47,6 @@ public class RPCService {
         XQueryService service=(XQueryService)col.getService("XQueryService","1.0");
         service.clearNamespaces();
         service.setProperty("indent","yes");
-        //service.setNamespace("","rss");
         //Execute query print result
         ResourceSet result=service.query(xQuery);
         ResourceIterator i=result.getIterator();
