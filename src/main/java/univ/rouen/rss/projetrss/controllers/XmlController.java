@@ -1,6 +1,5 @@
 package univ.rouen.rss.projetrss.controllers;
 
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,6 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 public class XmlController {
     @Autowired
@@ -94,7 +90,7 @@ public class XmlController {
         System.out.println(guid);
 
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\"\n;"
-                +"for $x in doc(\"" + resourceName + "\")//feed/item where $x/rss:guid/text()='"+guid+"'\n"
+                +"for $x in doc(\"" + resourceName + "\")//feed/item where $x/guid/text()='"+guid+"'\n"
                 +"return update delete $x";
 
         return service.get(xQuery);
@@ -108,7 +104,7 @@ public class XmlController {
         String xQuery="declare namespace rss=\"http://univrouen.fr/rss22\";\n"
                 +"update insert "+validXml+" into  collection('/db/rss22')/feed";
 
-        System.out.println(flux);
+        System.out.println(validXml);
 
         if(service.valid(file,validXml)){
             service.get(xQuery);
