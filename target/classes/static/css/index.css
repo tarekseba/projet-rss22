@@ -15,7 +15,7 @@ body {
     margin: auto;
     margin-top: 1rem;
     padding-top: 1rem;
-    padding-bottom: 1rem
+    padding-bottom: 1rem;
     background: linear-gradient(180deg, #ffffff5c 0%, #ffffff5c 75%);
     box-shadow: 2px 2px 20px 5px rgb(0 0 0 / 40%), inset 0 0 20px 0px rgb(255 255 255 / 20%);
 }
