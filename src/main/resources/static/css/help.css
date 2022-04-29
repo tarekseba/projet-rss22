@@ -1,3 +1,43 @@
-.title {
-    color: red;
+.urlmethodguid{
+    cursor: pointer;
+    border: 1px solid /*rgb(42, 194, 100)*/ gainsboro;
+    border-radius: 30px;
+}
+
+.table{
+    width: 100%;
+    height: 40px;
+}
+
+.getMethod{
+    /*background-color: #04aa6d;
+    color: white;*/
+    text-align: center;
+    font-weight: bold;
+    width: 10% !important;
+}
+
+.getUrl{
+    text-align: left;
+    font-weight: bold;
+    width: 20% !important;
+    /*background-color: #c7eee2;*/
+}
+
+.getDescrip{
+    /*background-color: #c2f8e8;*/
+    text-align: left;
+}
+
+.ParamResponse{
+    border: 1px solid gainsboro; width: 100%
+}
+
+.ContentParamResp{
+    border: 1px solid gainsboro;
+    width: 100%;
+    background-color: whitesmoke;
+}
+#afficher,#afficherContentPost,#afficherContentGet,#afficherContentDel{
+    display: none;
 }

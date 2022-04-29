@@ -1,14 +1,429 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./css/help.css" type="text/css">
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/help.css" type="text/css" />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/help.css" />
     <title>Help</title>
 </head>
 <body>
-<h1 class="title">HELP - RSS22</h1>
+<div
+        style="
+        margin-top: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 100px;
+        padding-right: 100px;
+      "
+>
+    <h1>RSS-22 API</h1>
+    <p>Liste et description des operations gérées par le service REST.</p>
+    <div id="1" style="margin: 10px">
+        <table class="table">
+            <tbody>
+            <tr class="urlmethodguid" onclick="showDivGet()">
+                <td class="getMethod">GET</td>
+                <td class="getUrl">/rss22/resume/xml</td>
+                <td class="getDescrip">
+                    Affiche la liste des articles stockés. Pour chaque article ne
+                    sera affiché que le guid, le titre, la date
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="afficherContentGet">
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Parametres</h5>
+            </div>
+            <div class="ContentParamResp">
+                <p style="margin: 15px">Aucun Parametre</p>
+            </div>
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Reponses</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>200</td>
+                        <td>Articles trouvés</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <h6>Model</h6>
+                            <div
+                                    style="
+                        background-color: black;
+                        color: white;
+                        width: 90%;
+                        border-radius: 7px;
+                      "
+                            >
+                                &lt;items&gt; <br />
+                                &ensp;&lt;item&gt; <br />
+                                &emsp;
+                                &lt;guid&gt;388206d7-b404-433c-b4df-62c9687a59c8&lt;/guid&gt;
+                                <br />
+                                &emsp; &lt;title&gt;En Ukraine, la plus grande centrale
+                                nucléaire d’Europe tombée aux mains de la
+                                Russie&lt;/title&gt; <br />
+                                &emsp; &lt;date&gt;2022-03-04T11:30:08&lt;/date&gt;
+                                <br />
+                                &ensp;&lt;/item&gt;
+                                <br />
+                                &ensp;&lt;item&gt; <br />
+                                &emsp;
+                                &lt;guid&gt;388206e8-b5ad-433c-54df-62c9de2559c8&lt;/guid&gt;
+                                <br />
+                                &emsp; &lt;title&gt;La « lente » décrue des inégalités
+                                entre les femmes et les hommes&lt;/title&gt; <br />
+                                &emsp; &lt;date&gt;2022-03-04T10:04:30&lt;/date&gt;
+                                <br />
+                                &ensp;&lt;/item&gt;
+                                <br />
+                                &lt;/items&gt;
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="2" style="margin: 10px">
+        <table class="table">
+            <tbody>
+            <tr class="urlmethodguid" onclick="showDiv()">
+                <td class="getMethod">GET</td>
+                <td class="getUrl">/rss22/html/{guid}</td>
+                <td class="getDescrip">
+                    Affiche le contenu complet de l’article dont l’identifiant est
+                    {guid}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="afficher">
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Parametres</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>guid</td>
+                        <td>String</td>
+                        <td>guid de l'article</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Reponses</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>200</td>
+                        <td>article trouvé</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <h6>Model</h6>
+                            <div
+                                    style="
+                        background-color: black;
+                        color: white;
+                        width: 90%;
+                        border-radius: 7px;
+                      "
+                            >
+                                &lt;item&gt; <br />
+                                &emsp;
+                                &lt;guid&gt;388206d7-b404-433c-b4df-62c9687a59c8&lt;/guid&gt;
+                                <br />
+                                &emsp; &lt;title&gt;En Ukraine, la plus grande centrale
+                                nucléaire d’Europe tombée aux mains de la
+                                Russie&lt;/title&gt; <br />
+                                &emsp; &lt;category term="International" /&gt; <br />
+                                &emsp;
+                                &lt;published&gt;2022-03-04T11:30:08&lt;/published&gt;
+                                <br />
+                                &emsp; &lt;image
+                                href="https://img.lemde.fr/2022/03/1hi2jo.jpg"
+                                alt="Centrale nucléaire de Zaporijia" length="644"
+                                type="jpeg" /&gt;
+                                <br />
+                                &emsp; &lt;content
+                                href="https://img.lemde.fr/2022/03/1hi2jo.jpg"
+                                alt="Centrale nucléaire de Zaporijia" length="644"
+                                type="jpeg" &gt;<br />
+                                &emsp; &emsp; La centrale de Zaporijia a été touchée dans
+                                la nuit par des frappes russes. Un incendie s’est déclaré,
+                                avant d’être éteint dans la matinée<br />
+                                &emsp; &lt;content/&gt;
+                                <br />
+                                &emsp; &lt;author&gt;<br />
+                                &emsp; &emsp; &lt;name&gt;Le Monde&lt;/name&gt;<br />
+                                &emsp; &lt;author/&gt;
+                                <br />
+                                &lt;/item&gt;
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>Mauvaise requete</td>
+                    </tr>
+                    <tr>
+                        <td>404</td>
+                        <td>article non trouvé</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="3" style="margin: 10px">
+        <table class="table">
+            <tbody>
+            <tr id="urlmethodguid" onclick="showDivDel()">
+                <td class="getMethod">DELETE</td>
+                <td class="getUrl">/rss22/delete/{guid}</td>
+                <td class="getDescrip">
+                    Suppression de l’article dont l’identifiant est {guid}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="afficherContentDel">
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Parametres</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>guid</td>
+                        <td>String</td>
+                        <td>guid de l'article</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Reponses</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>200</td>
+                        <td>article supprimé</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>Mauvaise requete</td>
+                    </tr>
+                    <tr>
+                        <td>404</td>
+                        <td>article non trouvé</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="4" style="margin: 10px">
+        <table class="table">
+            <tbody>
+            <tr class="urlmethodguid" onclick="showDivPost()">
+                <td class="getMethod">POST</td>
+                <td class="getUrl">/rss22/insert</td>
+                <td class="getDescrip">
+                    Flux XML décrivant le flux rss22 à ajouter, conforme au schéma
+                    xsd .
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="afficherContentPost">
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Parametres</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>body</td>
+                        <td>
+                            <div
+                                    style="
+                        background-color: black;
+                        color: white;
+                        width: 90%;
+                        border-radius: 7px;
+                      "
+                            >
+                                &lt;item&gt; <br />
+                                &emsp;
+                                &lt;guid&gt;388206d7-b404-433c-b4df-62c9687a59c8&lt;/guid&gt;
+                                <br />
+                                &emsp; &lt;title&gt;En Ukraine, la plus grande centrale
+                                nucléaire d’Europe tombée aux mains de la
+                                Russie&lt;/title&gt; <br />
+                                &emsp; &lt;category term="International" /&gt; <br />
+                                &emsp;
+                                &lt;published&gt;2022-03-04T11:30:08&lt;/published&gt;
+                                <br />
+                                &emsp; &lt;image
+                                href="https://img.lemde.fr/2022/03/1hi2jo.jpg"
+                                alt="Centrale nucléaire de Zaporijia" length="644"
+                                type="jpeg" /&gt;
+                                <br />
+                                &emsp; &lt;content
+                                href="https://img.lemde.fr/2022/03/1hi2jo.jpg"
+                                alt="Centrale nucléaire de Zaporijia" length="644"
+                                type="jpeg" &gt;<br />
+                                &emsp; &emsp; La centrale de Zaporijia a été touchée dans
+                                la nuit par des frappes russes. Un incendie s’est déclaré,
+                                avant d’être éteint dans la matinée<br />
+                                &emsp; &lt;content/&gt;
+                                <br />
+                                &emsp; &lt;author&gt;<br />
+                                &emsp; &emsp; &lt;name&gt;Le Monde&lt;/name&gt;<br />
+                                &emsp; &lt;author/&gt;
+                                <br />
+                                &lt;/item&gt;
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ParamResponse">
+                <h5 style="margin: 15px">Reponses</h5>
+            </div>
+            <div class="ContentParamResp">
+                <table style="width: 100%; margin: 15px">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>200</td>
+                        <td>article ajouté</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>Mauvaise requete</td>
+                    </tr>
+                    <tr>
+                        <td>415</td>
+                        <td>article non validé par le xsd</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="swagger.js"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"
+></script>
 </body>
 </html>
