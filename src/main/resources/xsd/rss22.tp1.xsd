@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified" >
+
+	<xs:element name="item" type="itemType" />
+
+	<xs:complexType name="itemType">
+		<xs:sequence>
+			<xs:element name="guid" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="title" type="limitedStringType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="category" type="categoryType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element name="published" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="updated" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+			</xs:choice>
+			<xs:element name="image" type="imageType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="content" type="contentType" minOccurs="1" maxOccurs="1"/>
+			<xs:choice minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="author" type="authorContributorType"/>
+				<xs:element name="contributor" type="authorContributorType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+   	
+   	<xs:simpleType name="mimeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[-\w.]+/[-\w.]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+   	
+   	<xs:complexType name="authorContributorType">
+   		<xs:all>
+   			<xs:element name="name" type="smallLimitedStringType" minOccurs="1" maxOccurs="1"/>
+   			<xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1"/>
+   			<xs:element name="uri" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
+   		</xs:all>
+   	</xs:complexType>
+   	
+   	<xs:simpleType name="limitedStringType">
+	   	<xs:restriction base="xs:string">
+	   		<xs:maxLength value="128"/>
+	   	</xs:restriction>
+   	</xs:simpleType>
+   	
+   	<xs:simpleType name="smallLimitedStringType">
+	   	<xs:restriction base="xs:string">
+	   		<xs:maxLength value="64"/>
+	   	</xs:restriction>
+   	</xs:simpleType>
+   	
+   	<xs:simpleType name="relType">
+   		<xs:restriction base="xs:string">
+   			<xs:enumeration value="self"/>
+   			<xs:enumeration value="alternate"/>
+   		</xs:restriction>
+   	</xs:simpleType>
+   	
+   	<xs:complexType name="categoryType">
+   		<xs:attribute name="term" type="xs:string" use="required"/>
+   	</xs:complexType>
+   	
+   	<xs:complexType name="imageType">
+   		<xs:attribute name="type" type="imageTypeType" use="required"/>
+   		<xs:attribute name="href" type="xs:anyURI" use="required"/>
+   		<xs:attribute name="alt" type="xs:string" use="required"/>
+   		<xs:attribute name="length" type="xs:int" use="optional"/>
+   	</xs:complexType>
+
+	<xs:simpleType name="imageTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="gif"/>
+			<xs:enumeration value="jpg"/>
+			<xs:enumeration value="jpeg"/>
+			<xs:enumeration value="bmp"/>
+			<xs:enumeration value="png"/>
+		</xs:restriction>
+	</xs:simpleType>
+   	
+   	<xs:complexType name="contentType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" type="typeType" use="required"/>
+				<xs:attribute name="href" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+   	</xs:complexType>
+   	
+   	<xs:simpleType name="typeType">
+   		<xs:restriction base="xs:string">
+   			<xs:enumeration value="text"/>
+   			<xs:enumeration value="src"/>
+   		</xs:restriction>
+   	</xs:simpleType>
+
+	<xs:simpleType name="langType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-z]{2}(-(([A-Z]{2})|[0-9]{3}))?"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="emailType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+   	
+</xs:schema>

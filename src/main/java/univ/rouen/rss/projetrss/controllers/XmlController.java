@@ -20,7 +20,7 @@ public class XmlController {
     private RPCService service;
     protected static String resourceName = "tp2.xml";
 
-    private static File file=new File("src/main/resources/xsd/item.xsd");
+    private static File file=new File("src/main/resources/xsd/rss22.tp1.xsd");
 
     @RequestMapping(value = "/rss22/resume/xml",method = RequestMethod.GET,produces = "application/xml")
     public String getFluxXML() throws Exception {
@@ -37,7 +37,7 @@ public class XmlController {
                 "}\n"
                 +"<title>{$x/title/text()}</title><guid>{$x/guid/text()}</guid></item>}\n"+
                 "</items>";
-        return service.get(xQuery);
+        return service.xQueryRequest(xQuery);
     }
 
     @RequestMapping(value = "/rss22/resume/html",method = RequestMethod.GET,produces = "text/html")
@@ -47,7 +47,7 @@ public class XmlController {
                 +"for $x in collection('/db/rss22/')//feed\n"
                 +"return $x";
 
-        String xml= service.get(xQuery);
+        String xml= service.xQueryRequest(xQuery);
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer=transformerFactory.newTransformer(new StreamSource("src/main/resources/templates/item.xslt"));
@@ -64,7 +64,7 @@ public class XmlController {
                 +"for $x in doc(\"" + resourceName + "\")//feed/item where $x/guid/text()='"+guid+"'\n"
                 +"return $x";
 
-        String xml= service.get(xQuery);
+        String xml= service.xQueryRequest(xQuery);
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer=transformerFactory.newTransformer(new StreamSource("src/main/resources/templates/itembyguid.xslt"));
@@ -81,7 +81,7 @@ public class XmlController {
                 +"for $x in doc(\"" + resourceName + "\")//feed/item where $x/guid/text()='"+guid+"'\n"
                 +"return $x";
 
-        return service.get(xQuery);
+        return service.xQueryRequest(xQuery);
     }
 
     @DeleteMapping(value = "/rss22/delete/{guid}",produces = "application/xml")
@@ -93,7 +93,7 @@ public class XmlController {
                 +"for $x in doc(\"" + resourceName + "\")//feed/item where $x/guid/text()='"+guid+"'\n"
                 +"return update delete $x";
 
-        return service.get(xQuery);
+        return service.xQueryRequest(xQuery);
     }
 
     @PostMapping(value = "/rss22/insert")
@@ -106,8 +106,8 @@ public class XmlController {
 
         System.out.println(validXml);
 
-        if(service.valid(file,validXml)){
-            service.get(xQuery);
+        if(service.validXMLFlux(file,validXml)){
+            service.xQueryRequest(xQuery);
             System.out.println("HAHAHAHAHAHA");
             return new ResponseEntity("status:succes", HttpStatus.OK);
         }

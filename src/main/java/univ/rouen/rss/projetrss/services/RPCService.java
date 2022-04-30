@@ -34,7 +34,7 @@ public class RPCService {
     //protected static String URI = "xmldb:exist://exist-tarek-xml.cleverapps.io/exist/xmlrpc";
     protected static String collectionPath = "/db/rss22";
 
-    public String get(String xQuery) throws Exception {
+    public String xQueryRequest(String xQuery) throws Exception {
         //Initialize data base driver
         Class cl=Class.forName(DRIVER);
         Database database=(Database)cl.getDeclaredConstructor().newInstance();
@@ -60,7 +60,7 @@ public class RPCService {
         return buffer.toString();
     }
 
-    public boolean valid(File file,String xmlString){
+    public boolean validXMLFlux(File file,String xmlString){
         Source xml=new StreamSource(new StringReader(xmlString));
         SchemaFactory schemaFactory=SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
