@@ -30,8 +30,8 @@ import java.lang.reflect.InvocationTargetException;
 @Service
 public class RPCService {
     protected static String DRIVER = "org.exist.xmldb.DatabaseImpl";
-    protected static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
-    //protected static String URI = "xmldb:exist://exist-tarek-xml.cleverapps.io/exist/xmlrpc";
+    //protected static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc";
+    protected static String URI = "xmldb:exist://exist-tarek-xml.cleverapps.io/exist/xmlrpc";
     protected static String collectionPath = "/db/rss22";
 
     public String xQueryRequest(String xQuery) throws Exception {
