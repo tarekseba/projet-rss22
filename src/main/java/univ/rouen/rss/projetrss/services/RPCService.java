@@ -1,7 +1,6 @@
 package univ.rouen.rss.projetrss.services;
 
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLFilter;
