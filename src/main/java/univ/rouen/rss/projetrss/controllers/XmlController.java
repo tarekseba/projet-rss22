@@ -18,7 +18,7 @@ import java.io.StringWriter;
 public class XmlController {
     @Autowired
     private RPCService service;
-    protected static String resourceName = "tp2.xml";
+    protected static String resourceName = "rss.xml";
 
     private static File file=new File("src/main/resources/xsd/rss22.tp1.xsd");
 

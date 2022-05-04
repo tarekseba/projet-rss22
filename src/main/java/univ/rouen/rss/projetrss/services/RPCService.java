@@ -63,9 +63,7 @@ public class RPCService {
             Schema schema=schemaFactory.newSchema(file);
             Validator validator=schema.newValidator();
             validator.validate(xml);
-            System.out.println("IS VALID");
         } catch (IOException|SAXException e) {
-            System.out.println(e.getMessage());
             return false;
         }
         return true;

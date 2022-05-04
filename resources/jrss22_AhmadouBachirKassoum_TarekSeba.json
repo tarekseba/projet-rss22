@@ -1,0 +1,139 @@
+{
+  "info": {
+    "_postman_id": "c38e2b31-7b70-4ddc-a7c9-b36b43b4199c",
+    "name": "RSS_AhmadouBachirKassoum_TarekSeba",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "localhost:8100/rss22/insert",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/xml",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "<rss:item>\n<rss:guid>f2fdba76-7d51-4152-8cfd-b6cccee9f0b8</rss:guid>\n<rss:title>Fantôme ? Apparition céleste ? Non, c'est un spectre de Brocken filmé sur la dune du Pilat</rss:title>\n<rss:category term=\"Planete\"/>\n<rss:published>2018-01-29T17:52:00</rss:published>\n<rss:image alt=\"Image d'un spectre de Brocken\" href=\"https://www.francetvinfo.fr/pictures/NKCSq6_lfKDumP_k_keRYBuaKQc/640x360/2018/01/29/eltVideoWs-275222-5a6f4ded67e0a.jpg\" length=\"644\" type=\"jpeg\"/>\n<rss:content href=\"https://www.francetvinfo.fr/decouverte/bizarre/video-fantome-apparition-celeste-non-c-est -un-spectre-de-brocken-filme-sur-la-dune-du-pilat_2584892.html#xtor=RSS-3-[decouverte/bizarre]\" type=\"text\">Un photographe girondin a filmé un phénomène rare : son ombre entourée d'un arc-en-ciel. C'est au sommet de la célèbre dune du Pilat, à l'entrée du bassin d'Arcachon (Gironde), que la nature a offert un spectacle rare à un photographe local : un spectre de Brocken. Ce phénomène optique provoque l'apparition d'une ombre considérablement agrandie entourée d'un cercle lumineux multicolore. Il a été observé et filmé par le photographe Florian Clément, dimanche 28 janvier. Du soleil et du brouillard Comme l'explique le Cnes, pour obtenir ce spectre, il faut disposer d'un ensoleillement sans obstacle d'un côté et d'un brouillard, ou d'un nuage de l'autre côté. En positionnant au milieu un objet, comme son corps par exemple, on obtient cette ombre entourée d'un arc-en-ciel. Mais elle n'est visible que par le sujet situé entre le soleil et le nuage. Le spectre de Brocken est la plupart du temps observé dans les zones montagneuses. Le nom vient du point culminant de la chaîne du Harz en Allemagne, le Brocken. </rss:content>\n<rss:contributor>\n<rss:name>France Info</rss:name>\n<rss:uri>https://www.lemonde.fr/signataires/julesthomas</rss:uri>\n</rss:contributor>\n</rss:item>",
+          "options": {
+            "raw": {
+              "language": "xml"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8100/rss22/insert",
+          "host": ["localhost"],
+          "port": "8100",
+          "path": ["rss22", "insert"]
+        },
+        "description": "Flux XML décrivant le flux rss22 à ajouter, conforme au schéma xsd"
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8100/rss22/resume/xml",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rss22/resume/xml",
+          "host": ["{{baseUrl}}"],
+          "path": ["rss22", "resume", "xml"]
+        },
+        "description": "Affiche la liste des articles stockés"
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8100/rss22/resume/xml/9ea6a16b-cb36-4678-98b5-aabc5b53cbd0",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rss22/resume/xml/9ea6a16b-cb36-4678-98b5-aabc5b53cbd0",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "rss22",
+            "resume",
+            "xml",
+            "9ea6a16b-cb36-4678-98b5-aabc5b53cbd0"
+          ]
+        },
+        "description": "Affiche le contenu complet de l’article dont l’identifiant est {guid}"
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8100/rss22/delete/0cc519f3-90b2-4842-9f2a-74b3404e3f75",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rss22/delete/0cc519f3-90b2-4842-9f2a-74b3404e3f75",
+          "host": ["{{baseUrl}}"],
+          "path": ["rss22", "delete", "0cc519f3-90b2-4842-9f2a-74b3404e3f75"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8100/rss22/resume/html",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rss22/resume/html",
+          "host": ["{{baseUrl}}"],
+          "path": ["rss22", "resume", "html"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:8100/rss22/resume/html/9ea6a16b-cb36-4678-98b5-aabc5b53cbd0",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/rss22/resume/html/9ea6a16b-cb36-4678-98b5-aabc5b53cbd0",
+          "host": ["{{baseUrl}}"],
+          "path": [
+            "rss22",
+            "resume",
+            "html",
+            "9ea6a16b-cb36-4678-98b5-aabc5b53cbd0"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "localhost:8100",
+      "type": "string"
+    }
+  ]
+}
