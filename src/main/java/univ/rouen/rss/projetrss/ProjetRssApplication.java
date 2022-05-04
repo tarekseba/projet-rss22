@@ -20,7 +20,7 @@ public class ProjetRssApplication {
 	public CorsFilter corsFilter(){
 		CorsConfiguration corsConfiguration=new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://localhost:4200/ajout"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://app-84a5e82f-d424-4ee9-be89-d9e3262545ee.cleverapps.io"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin","Access-Control-Allow-Origin","Content-Type","Accept","Authorization","Origin, Accept",
 				"X-Requested-Width","Access-Control-Request-Method","Access-Control-Request-Headers"));
 		corsConfiguration.setExposedHeaders(Arrays.asList("Origin","Access-Control-Allow-Origin","Content-Type","Accept","Authorization",
